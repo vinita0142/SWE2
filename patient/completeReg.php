@@ -2,32 +2,46 @@
 session_start();
 error_reporting(0);
 include('include/config.php');
-// include('include/checklogin.php');
-// check_login();
-
 if(isset($_POST['submit']))
 {	
-	$docid=$_SESSION['id'];
-	$patname=$_POST['patname'];
+$email=$_SESSION['email'];
+$patname=$_POST['patname'];
 $patcontact=$_POST['patcontact'];
 $patemail=$_POST['patemail'];
 $gender=$_POST['gender'];
 $pataddress=$_POST['pataddress'];
 $patage=$_POST['patage'];
 $medhis=$_POST['medhis'];
-$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd,PatientAge,PatientMedhis) values('$docid','$patname','$patcontact','$patemail','$gender','$pataddress','$patage','$medhis')");
+$sql=mysqli_query($con,"insert into tblpatient(email,Docid,PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd,PatientAge,PatientMedhis) values('$email','$docid','$patname','$patcontact','$patemail','$gender','$pataddress','$patage','$medhis')");
 if($sql)
 {
-echo "<script>alert('Patient info added Successfully');</script>";
-header('location:add-patient.php');
-
+    //if successfull entry in database
+    $sql="update patientlogin set completed='completed' where email='$email'";
+    $result=mysqli_query($con,$sql);
+    if($result){
+    echo '<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            swal({
+                title: "Registration success",
+                text: "Registration success.Click OK to go to dashboard",
+                icon: "success",
+                button: "Ok",
+                timer: 5000
+            }).then(function(){
+                window.location="dashboard.php";
+            });
+        });
+    </script>';
+    }
 }
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Doctor | Add Patient</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -45,26 +59,13 @@ header('location:add-patient.php');
 		<link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
 
 	<script>
-function userAvailability() {
-$("#loaderIcon").show();
-jQuery.ajax({
-url: "check_availability.php",
-data:'email='+$("#patemail").val(),
-type: "POST",
-success:function(data){
-$("#user-availability-status1").html(data);
-$("#loaderIcon").hide();
-},
-error:function (){}
-});
-}
 </script>
 	</head>
 	<body>
 		<div id="app">		
-<?php include('include/sidebar.php');?>
+<?php /*include('include/sidebar.php');*/?>
 <div class="app-content">
-<?php include('include/header.php');?>
+<?php /*include('include/header.php');*/?>
 						
 <div class="main-content" >
 <div class="wrap-content container" id="container">
@@ -72,16 +73,16 @@ error:function (){}
 <section id="page-title">
 <div class="row">
 <div class="col-sm-8">
-<h1 class="mainTitle">Patient | Add Patient</h1>
+<h1 class="mainTitle">Please complete your Registration!</h1>
 </div>
-<ol class="breadcrumb">
+<!-- <ol class="breadcrumb">
 <li>
 <span>Patient</span>
 </li>
 <li class="active">
 <span>Add Patient</span>
 </li>
-</ol>
+</ol> -->
 </div>
 </section>
 <div class="container-fluid container-fullw bg-white">
@@ -112,8 +113,8 @@ Patient Name
 <label for="fess">
 Patient Email
 </label>
-<input type="email" id="patemail" name="patemail" class="form-control"  placeholder="Enter Patient Email id" required="true" onBlur="userAvailability()">
-<span id="user-availability-status1" style="font-size:12px;"></span>
+<input type="email" id="patemail" name="patemail" class="form-control"  placeholder="Enter Patient Email id" required="true">
+<!-- <span id="user-availability-status1" style="font-size:12px;"></span> -->
 </div>
 <div class="form-group">
 <label class="block">
@@ -150,7 +151,7 @@ Patient Address
 </div>	
 
 <button type="submit" name="submit" id="submit" class="btn btn-o btn-primary">
-Add
+Submit
 </button>
 </form>
 </div>

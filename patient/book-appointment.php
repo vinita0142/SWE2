@@ -17,6 +17,37 @@ include 'include/config.php';
 			});
 		}
 	</script>
+<?php
+if(isset($_POST['submit'])){
+	$email=$_SESSION['email'];
+	$doctor=$_POST['doctor'];
+	$spec=$_POST['spec'];
+	$aptdate=$_POST['appdate'];
+	$apttime=$_POST['apptime'];
+	$sql=mysqli_query($con,"insert into apptdetails(email,dname,spec,date,time) values('$email','$doctor','$spec','$aptdate','$apttime')");
+if($sql)
+{
+    echo '<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+    
+        $(document).ready(function() {
+            swal({
+                title: "Appointment booked",
+                text: "Booked. Click OK to go to dashboard",
+                icon: "success",
+                button: "Ok",
+                timer: 5000
+            }).then(function(){
+                window.location="dashboard.php";
+            });
+        });
+    </script>';
+    }
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,6 +150,7 @@ include 'include/config.php';
 														<label for="AppointmentDate">
 															Date
 														</label>
+				
 														<input class="form-control datepicker" name="appdate"
 															required="required" data-date-format="yyyy-mm-dd">
 

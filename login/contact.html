@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedCare</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="contact_style.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="logo">
+        <table>
+          <tr>
+            <td>
+              <img src="../images/icons8-telemedicine-50.png" alt="Logo" />
+            </td>
+            <td>MedCare</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <ul class="links">
+          <li><a href="index.php">HOME</a></li>
+          <li><a href="services.html">OUR SERVICES</a></li>
+          <li><a href="map.html">NEAREST HOSPITAL</a></li>
+          <li><a href="contact.html">CONTACT US</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- navbar ends here -->
+    <div class="container">
+      <div class="contactInfo">
+        <!-- <h1>add email phone and address here</h1> -->
+      </div>
+      <div class="container_contact">
+        <div class="send_msg">
+          <form onsubmit="sendEmail(); reset(); return false;">
+            <h2>LEAVE A MESSAGE</h2>
+            <input
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              required
+            />
+            <input type="email" id="email" placeholder="Email ID" required />
+            <input type="text" id="phone" placeholder="Phone No" required />
+            <textarea
+              name="message"
+              id="message"
+              rows="5"
+              placeholder="How can I help you?"
+              required
+            ></textarea>
+            <button type="submit">SEND</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>

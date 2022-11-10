@@ -12,19 +12,17 @@
         <div class="logo">
             <table>
                 <tr>
-                    <td><img src="C:\xampp\htdocs\MedCare\images\icons8-telemedicine-50.png" alt="Logo"></td>
+                    <td><img src="../images/icons8-telemedicine-50.png" alt="Logo"></td>
                     <td>MedCare</td>
                 </tr>
             </table>
         </div>
             <ul class="links">
                 <li><a href="index.html">HOME</a></li>
-                <li><a href="about.html">ABOUT US</a></li>
                 <li><a href="services.html">OUR SERVICES</a></li>
-                <li><a href="map2.html">NEAREST HOSPITAL</a></li>
+                <li><a href="map.html">NEAREST HOSPITAL</a></li>
                 <li><a href="contact.html">CONTACT US</a></li>
-                <li><a href="./talk.html">CONSULT DOCTOR</a></li>
-
+                <li><a href="#">CONSULT DOCTOR</a></li>
             </ul>
     </div>
     <div class="container">
@@ -76,27 +74,27 @@
         <div class="right">
             <!-- <h2>Picture here</h2> -->
             
-            <img src="images/bg9.jpg" alt="">
+            <img src="../images/bg9.jpg" alt="">
         </div>
     </div>
     <div class="services">
         <div class="nearestDoc">
             <!-- <a href="https://www.flaticon.com/free-icons/ambulance" title="ambulance icons"></a> -->
-            <img src="images/doctor.png" alt="">
+            <img src="../images/doctor.png" alt="">
             <h3>Doctor</h3>
-            <h3><a href="doctor-portal/doctor.html">Click Here</a></h3>
+            <h3><a href="index.php">Click Here</a></h3>
         </div>
         <div class="cart">
             <!-- <a href="https://www.flaticon.com/free-icons/ambulance" title="ambulance icons"></a> -->
-            <img src="images/trolley.png" alt="">
+            <img src="../images/trolley.png" alt="">
             <h3>Product</h3>
-            <h3><a href="./products.html">Click Here</a> </h3>
+            <h3><a href="#">Click Here</a> </h3>
         </div>
         <div class="telemed">
             <!-- <a href="https://www.flaticon.com/free-icons/ambulance" title="ambulance icons"></a> -->
-            <img src="images/hospital.png" alt="">
+            <img src="../images/hospital.png" alt="">
             <h3>Nearby Hospitals</h3>
-            <h3><a href="./map2.html">Click Here</a> </h3>
+            <h3><a href="map.html">Click Here</a> </h3>
         </div>
     </div>
 </div>

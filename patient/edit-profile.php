@@ -5,18 +5,16 @@ include('include/config.php');
 
 if(isset($_POST['submit']))
 {
-	$fname=$_POST['fname'];
-$address=$_POST['address'];
-$city=$_POST['city'];
+$name=$_POST['name'];
+$address=$_POST['addr'];
 $gender=$_POST['gender'];
 $height=$_POST['height'];
 $weight=$_POST['weight'];
-$sql=mysqli_query($con,"Update users set fullName='$fname',address='$address',city='$city',gender='$gender',weight='$weight',height='$height' where id='".$_SESSION['id']."'");
+$sql=mysqli_query($con,"UPDATE patientdetails SET name='$name',addr='$address',gender='$gender',weight='$weight',height='$height' WHERE email = '".$_SESSION['email']."' ");
+
 if($sql)
 {
 $msg="Your Profile updated Successfully";
-
-
 }
 
 }
@@ -24,7 +22,7 @@ $msg="Your Profile updated Successfully";
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>User | Edit Profile</title>
+		<title>User | Update Profile</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -57,14 +55,14 @@ $msg="Your Profile updated Successfully";
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">User | Edit Profile</h1>
+									<h1 class="mainTitle">User | Update Profile</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>User </span>
 									</li>
 									<li class="active">
-										<span>Edit Profile</span>
+										<span>Update Profile</span>
 									</li>
 								</ol>
 							</div>
@@ -80,42 +78,35 @@ $msg="Your Profile updated Successfully";
 										<div class="col-lg-8 col-md-12">
 											<div class="panel panel-white">
 												<div class="panel-heading">
-													<h5 class="panel-title">Edit Profile</h5>
+													<h5 class="panel-title">Update Profile</h5>
 												</div>
 												<div class="panel-body">
 									<?php 
-$sql=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
+$sql=mysqli_query($con,"select * from patientdetails where email='".$_SESSION['email']."'");
 while($data=mysqli_fetch_array($sql))
 {
 ?>
-<h4><?php echo htmlentities($data['fullName']);?>'s Profile</h4>
-<p><b>Profile Reg. Date: </b><?php echo htmlentities($data['regDate']);?></p>
-<?php if($data['updationDate']){?>
-<p><b>Profile Last Updation Date: </b><?php echo htmlentities($data['updationDate']);?></p>
-<?php } ?>
-<hr />													<form role="form" name="edit" method="post">
+<h4><?php echo htmlentities($data['name']);?>'s Profile</h4>
+
+
+<hr />													<form role="form" name="update" method="post">
 													
 
 <div class="form-group">
-															<label for="fname">
-																 User Name
+															<label for="name">
+																 Name
 															</label>
-	<input type="text" name="fname" class="form-control" value="<?php echo htmlentities($data['fullName']);?>" >
+	<input type="text" name="name" class="form-control" value="<?php echo htmlentities($data['name']);?>" >
 														</div>
 
 
 <div class="form-group">
-															<label for="address">
+															<label for="addr">
 																 Address
 															</label>
-					<textarea name="address" class="form-control"><?php echo htmlentities($data['address']);?></textarea>
+					<textarea name="addr" class="form-control"><?php echo htmlentities($data['addr']);?></textarea>
 														</div>
-<div class="form-group">
-															<label for="city">
-																 City
-															</label>
-		<input type="text" name="city" class="form-control" required="required"  value="<?php echo htmlentities($data['city']);?>" >
-														</div>
+
 	
 <div class="form-group">
 									<label for="gender">
@@ -140,23 +131,17 @@ while($data=mysqli_fetch_array($sql))
 																 Height(in cm)
 															</label>
 		<input type="text" name="height" class="form-control" required="required"  value="<?php echo htmlentities($data['height']);?>" >
-<div class="form-group">
-									<label for="fess">
-																 User Email
-															</label>
-					<input type="email" name="uemail" class="form-control"  readonly="readonly"  value="<?php echo htmlentities($data['email']);?>">
-					<a href="change-emaild.php">Update your email id</a>
-														</div>
+
 
 
 
 														
-														
-														
-														
-														<button type="submit" name="submit" class="btn btn-o btn-primary">
+		<br><button type="submit" name="submit" class="btn btn-o btn-primary">
 															Update
-														</button>
+														</button>	
+														
+														
+												
 													</form>
 													<?php } ?>
 												</div>

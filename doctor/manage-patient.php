@@ -2,8 +2,8 @@
 session_start();
 error_reporting(0);
 include('include/config.php');
-include('include/checklogin.php');
-check_login();
+//include('include/checklogin.php');
+//check_login();
 
 ?>
 <!DOCTYPE html>
@@ -54,43 +54,42 @@ check_login();
 <div class="col-md-12">
 <h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Patients</span></h5>
 	
-<table class="table table-hover" id="sample-table-1">
+<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+<tr align="center">
 <thead>
 <tr>
 <th class="center">#</th>
 <th>Patient Name</th>
 <th>Patient Contact Number</th>
 <th>Patient Gender </th>
-<th>Creation Date </th>
-<th>Updation Date </th>
+<th>Height </th>
+<th>Weight </th>
 <th>Action</th>
 </tr>
-</thead>
-<tbody>
 <?php
-$docid=$_SESSION['id'];
-$sql=mysqli_query($con,"select * from tblpatient where Docid='$docid' ");
+//$sql=mysqli_query($con,"SELECT * from patientdetails JOIN patientlogin where patientlogin.email=patientdetails.email ");
+$sql=mysqli_query($con,"SELECT * from patientdetails JOIN apptdetails ON apptdetails.email=patientdetails.email JOIN doctorlogin ON apptdetails.spec=doctorlogin.specialization AND doctorlogin.email= '" .$_SESSION['email'] .
+"'");
+$email=$row['patientdetails.email'];
+echo $email;
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
 ?>
 <tr>
 <td class="center"><?php echo $cnt;?>.</td>
-<td class="hidden-xs"><?php echo $row['PatientName'];?></td>
-<td><?php echo $row['PatientContno'];?></td>
-<td><?php echo $row['PatientGender'];?></td>
-<td><?php echo $row['CreationDate'];?></td>
-<td><?php echo $row['UpdationDate'];?>
-</td>
-<td>
-
-<a href="view-patient.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
-
-</td>
+<td class="hidden-xs"><?php echo $row['name'];?></td>
+<td><?php echo $row['phone'];?></td>
+<td><?php echo $row['gender'];?></td>
+<td><?php echo $row['height'];?></td>
+<td><?php echo $row['weight'];?></td>
+<td><a href="view-patient.php?viewid=<?php echo $row['email'];?>"><i class="fa fa-eye"></i></a></td>
 </tr>
 <?php 
 $cnt=$cnt+1;
- }?></tbody>
+ }?>
+</thead>
+</tr>
 </table>
 </div>
 </div>

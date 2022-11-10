@@ -2,8 +2,7 @@
 session_start();
 error_reporting(0);
 include('include/config.php');
-include('include/checklogin.php');
-check_login();
+
 
 ?>
 <!DOCTYPE html>
@@ -52,45 +51,43 @@ check_login();
 <div class="container-fluid container-fullw bg-white">
 <div class="row">
 <div class="col-md-12">
-<h5 class="over-title margin-bottom-15">View <span class="text-bold">Medical History</span></h5>
+<h5 class="over-title margin-bottom-15"><span class="text-bold">View Medical History</span></h5>
 	
-<table class="table table-hover" id="sample-table-1">
+<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+  <tr align="center">
 <thead>
 <tr>
 <th class="center">#</th>
 <th>Patient Name</th>
 <th>Patient Contact Number</th>
 <th>Patient Gender </th>
-<th>Creation Date </th>
-<th>Updation Date </th>
+<th>Height </th>
+<th>Weight </th>
+<th>Blood Group</th>
 <th>Action</th>
 </tr>
-</thead>
-<tbody>
 <?php
-$uid=$_SESSION['id'];
-$sql=mysqli_query($con,"select tblpatient.* from tblpatient join users on users.email=tblpatient.PatientEmail where users.id='$uid'");
+$email=$_SESSION['email'];
+$sql=mysqli_query($con,"SELECT * from patientdetails where email='$email'");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
 ?>
 <tr>
 <td class="center"><?php echo $cnt;?>.</td>
-<td class="hidden-xs"><?php echo $row['PatientName'];?></td>
-<td><?php echo $row['PatientContno'];?></td>
-<td><?php echo $row['PatientGender'];?></td>
-<td><?php echo $row['CreationDate'];?></td>
-<td><?php echo $row['UpdationDate'];?>
-</td>
-<td>
-
-<a href="view-medhistory.php?viewid=<?php echo $row['ID'];?>"><i class="fa fa-eye"></i></a>
-
-</td>
+<td class="hidden-xs"><?php echo $row['name'];?></td>
+<td><?php echo $row['phone'];?></td>
+<td><?php echo $row['gender'];?></td>
+<td><?php echo $row['height'];?></td>
+<td><?php echo $row['weight'];?></td>
+<td><?php echo $row['bloodGroup'];?></td>
+<td><a href="view-medhistory.php?viewid=<?php echo $row['email'];?>"><i class="fa fa-eye"></i></a></td>
 </tr>
 <?php 
 $cnt=$cnt+1;
- }?></tbody>
+ }?>
+</thead>
+</tr>
 </table>
 </div>
 </div>

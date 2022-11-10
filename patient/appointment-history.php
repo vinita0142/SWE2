@@ -66,7 +66,8 @@ if (isset($_GET['cancel'])) {
 									
 									<p style="color:red;"><?php echo htmlentities($_SESSION['msg']); ?>
 								<?php echo htmlentities($_SESSION['msg'] = ''); ?></p>	
-									<table class="table table-hover" id="sample-table-1">
+								<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+  									<tr align="center">
 										<thead>
 											<tr>
 												<th class="center">#</th>
@@ -80,8 +81,7 @@ if (isset($_GET['cancel'])) {
 												<th>Cancel</th>
 												
 											</tr>
-										</thead>
-										<tbody>
+										
 <?php
 $sql = mysqli_query(
     $con,
@@ -107,8 +107,9 @@ while ($row = mysqli_fetch_array($sql)) { ?>
 											
 											<?php $cnt = $cnt + 1;}?>
 											
-											
-										</tbody>
+											</thead>
+										</tr>		
+										
 									</table>
 								</div>
 							</div>

@@ -2,11 +2,11 @@
 session_start();
 error_reporting(0);
 include('include/config.php');
-include('include/checklogin.php');
-check_login();
+//include('include/checklogin.php');
+//check_login();
 if(isset($_GET['cancel']))
 		  {
-mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['id']."'");
+mysqli_query($con,"UPDATE doctorlogin SET status='0' where email ='".$_GET['email']."'");
                   $_SESSION['msg']="Appointment canceled !!";
 		  }
 ?>
@@ -66,7 +66,8 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 									
 									<p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
 								<?php echo htmlentities($_SESSION['msg']="");?></p>	
-									<table class="table table-hover" id="sample-table-1">
+								<table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+  									<tr align="center">
 										<thead>
 											<tr>
 												<th class="center">#</th>
@@ -77,12 +78,11 @@ mysqli_query($con,"update appointment set doctorStatus='0' where id ='".$_GET['i
 												<th>Appointment Creation Date  </th>
 												<th>Current Status</th>
 												<th>Action</th>
-												
-											</tr>
-										</thead>
-										<tbody>
+											</tr>		
+									
 <?php
-$sql=mysqli_query($con,"select users.fullName as fname,appointment.*  from appointment join users on users.id=appointment.userId where appointment.doctorId='".$_SESSION['id']."'");
+$sql=mysqli_query($con,"SELECT * from patientdetails join patientlogin ON patientdetails.email=patientlogin.email JOIN apptdetails ON apptdetails.email=patientlogin.email JOIN doctorlogin ON apptdetails.spec=doctorlogin.specialization AND doctorlogin.email= ' " .$_SESSION['email'] .
+" '");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
 {
@@ -90,53 +90,20 @@ while($row=mysqli_fetch_array($sql))
 
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
-												<td class="hidden-xs"><?php echo $row['fname'];?></td>
-												<td><?php echo $row['doctorSpecialization'];?></td>
-												<td><?php echo $row['consultancyFees'];?></td>
-												<td><?php echo $row['appointmentDate'];?> / <?php echo
-												 $row['appointmentTime'];?>
-												</td>
-												<td><?php echo $row['postingDate'];?></td>
-												<td>
-<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
-{
-	echo "Active";
-}
-if(($row['userStatus']==0) && ($row['doctorStatus']==1))  
-{
-	echo "Cancel by Patient";
-}
-
-if(($row['userStatus']==1) && ($row['doctorStatus']==0))  
-{
-	echo "Cancel by you";
-}
-
-
-
-												?></td>
-												<td >
-												<div class="visible-md visible-lg hidden-sm hidden-xs">
-							<?php if(($row['userStatus']==1) && ($row['doctorStatus']==1))  
-{ ?>
-
-													
-	<a href="appointment-history.php?id=<?php echo $row['id']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
-	<?php } else {
-
-		echo "Canceled";
-		} ?>
-												</div>
-												</td>
+												<td class="hidden-xs"><?php echo $row['name'];?></td>
+												<td><?php echo $row['specialization'];?></td>
+												<td><?php echo $row['fee'];?></td>
+												<td><?php echo $row['date'];?>/  <?php echo $row['time'];?></td>
+												<td><?php echo $row['cdate'];?></td>
+												<td><?php echo $row['status'];?></td>
+												<td><?php echo $row['completed'];?></td>																							
 											</tr>
-											
 											<?php 
-$cnt=$cnt+1;
+												$cnt=$cnt+1;
 											 }?>
-											
-											
-										</tbody>
-									</table>
+										</thead>
+									</tr>
+								</table>
 								</div>
 							</div>
 								</div>

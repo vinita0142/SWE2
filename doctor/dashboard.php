@@ -82,6 +82,22 @@ include 'include/config.php';
 										</div>
 									</div>
 								</div>
+								<!-- adding file upload -->
+								<div class="col-sm-4">
+									<div class="panel panel-white no-radius text-center">
+										<div class="panel-body">
+											<span class="fa-stack fa-2x"> <i class="fa fa-square fa-stack-2x text-primary"></i> <i class="fa fa-paperclip fa-stack-1x fa-inverse"></i> </span>
+											<h2 class="StepTitle">Upload Records</h2>
+										
+											<p class="cl-effect-1">
+												<a href="file.php">
+													Upload Records
+												</a>
+											</p>
+										</div>
+									</div>
+								</div>
+								<!-- file upload ends here -->
 								
 							</div>
 						</div>

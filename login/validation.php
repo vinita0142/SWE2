@@ -7,7 +7,12 @@ $password = $_POST['password'];
 $name = substr($_POST['email'], 0, 6);
 if ($name == 'doctor') {
     $sql = "select * from doctorlogin where email='$email' && password='$password'";
-} else {
+}
+else if($name=='adminr'){
+    $sql = "select * from adminlogin where email='$email' && password='$password'";
+
+}
+else {
     $sql = "select * from patientlogin where email='$email' && password='$password'";
 }
 $result = mysqli_query($con, $sql);
@@ -22,7 +27,11 @@ if ($num = mysqli_num_rows($result)) {
     if ($name == 'doctor') {
         echo "<script>window.location.href='../doctor/dashboard.php';</script>";
         exit();
-    } else {
+    }else if($name=='adminr'){
+        echo "<script>window.location.href='../admin/dashboard.php';</script>";
+        exit();
+    }
+     else {
         echo "<script>window.location.href='../patient/dashboard.php';</script>";
         exit();
     }

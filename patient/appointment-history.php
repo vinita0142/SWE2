@@ -21,7 +21,9 @@ if (isset($_GET['cancel'])) {
 			});
 		</script>';
 	}
-
+}
+if(isset($_GET['join'])){
+	$result=mysqli_query($con,"update apptdetails set status='completed' where aptId='".$_GET['id']."'");
 }
 ?>
 <!DOCTYPE html>
@@ -115,7 +117,11 @@ while ($row = mysqli_fetch_array($sql)) { ?>
 												</td>
 												<td><?php echo $row['cdate']; ?></td>
 												<td><?php echo $row['status']; ?></td>
-												<td><a id="join" href="https://webrtc-video-call-ec3b9.web.app">Join</a></td>
+												<!-- <td><a id="join" href="https://webrtc-video-call-ec3b9.web.app">Join</a></td> -->
+												<td>
+
+													<a href="meet.php?id=<?php echo $row['aptID']?>&join=join" class="btn btn-transparent btn-xs tooltips" title="Join Appointment" tooltip-placement="top" tooltip="join">Join</a>
+												</td>
 												<!-- <td><a href="cancel.php">Cancel</a></td> -->
 												<td>
 

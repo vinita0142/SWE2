@@ -38,8 +38,8 @@
                 <div class="form-container sign-up-container">
                     <form action="register.php" name="register" method="post">
                         <h1>Create Account</h1>
-                        <input type="text" placeholder="Username" required name="name"/>
                         <input type="email" placeholder="Email" required name="email"/>
+                        <input type="text" placeholder="Username" required name="name"/>
                         <input type="password" placeholder="Password" name="password" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 3}$"/>
                         <button>Sign Up</button>
                     </form>

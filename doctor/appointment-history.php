@@ -81,7 +81,7 @@ mysqli_query($con,"UPDATE doctorlogin SET status='0' where email ='".$_GET['emai
 											</tr>		
 									
 <?php
-$sql=mysqli_query($con,"SELECT * from patientdetails join patientlogin ON patientdetails.email=patientlogin.email JOIN apptdetails ON apptdetails.email=patientlogin.email JOIN doctorlogin ON apptdetails.spec=doctorlogin.specialization AND doctorlogin.email= ' " .$_SESSION['email'] .
+$sql=mysqli_query($con,"SELECT * from apptdetails join patientdetails ON patientdetails.email=apptdetails.email where apptdetails.dname= ' " .$_SESSION['uname'] .
 " '");
 $cnt=1;
 while($row=mysqli_fetch_array($sql))
@@ -91,12 +91,12 @@ while($row=mysqli_fetch_array($sql))
 											<tr>
 												<td class="center"><?php echo $cnt;?>.</td>
 												<td class="hidden-xs"><?php echo $row['name'];?></td>
-												<td><?php echo $row['specialization'];?></td>
+												<td><?php echo $row['spec'];?></td>
 												<td><?php echo $row['fee'];?></td>
 												<td><?php echo $row['date'];?>/  <?php echo $row['time'];?></td>
 												<td><?php echo $row['cdate'];?></td>
 												<td><?php echo $row['status'];?></td>
-												<td><?php echo $row['completed'];?></td>																							
+												<td><a href="https://webrtc-video-call-ec3b9.web.app">Join</a></td>																							
 											</tr>
 											<?php 
 												$cnt=$cnt+1;

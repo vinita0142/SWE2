@@ -6,7 +6,6 @@ $sql="select completed from patientlogin where email='$email'";
 $result=mysqli_query($con,$sql);
 $row=mysqli_fetch_array($result);
 $value=$row[0];
-// echo '<script>alert("'.$value.'")</script>';
 if($value=="na"){
 	header('Location: completeReg.php');
 }

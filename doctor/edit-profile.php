@@ -1,30 +1,26 @@
 <?php
 session_start();
-error_reporting(0);
-include 'include/config.php';
-include 'include/checklogin.php';
-if (isset($_POST['submit'])) {
-    $docspecialization = $_POST['Doctorspecialization'];
-    $docname = $_POST['docname'];
-    $docaddress = $_POST['clinicaddress'];
-    $docfees = $_POST['docfees'];
-    $doccontactno = $_POST['doccontact'];
-    $docemail = $_POST['docemail'];
-    $sql = mysqli_query(
-        $con,
-        "Update doctors set specilization='$docspecialization',doctorName='$docname',address='$docaddress',docFees='$docfees',contactno='$doccontactno' where id='" .
-            $_SESSION['id'] .
-            "'"
-    );
-    if ($sql) {
-        echo "<script>alert('Doctor Details updated Successfully');</script>";
-    }
+//error_reporting(0);
+include('include/config.php');
+
+if(isset($_POST['submit']))
+{
+$name=$_POST['username'];
+
+$special=$_POST['specialization'];
+$sql=mysqli_query($con,"UPDATE doctorlogin SET username='$name',specialization='$special' WHERE email = '".$_SESSION['email']."' ");
+
+if($sql)
+{
+$msg="Your Profile updated Successfully";
+}
+
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Doctr | Edit Doctor Details</title>
+		<title>Doctor | Update Profile</title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -45,23 +41,26 @@ if (isset($_POST['submit'])) {
 	</head>
 	<body>
 		<div id="app">		
-<?php include 'include/sidebar.php'; ?>
+<?php include('include/sidebar.php');?>
 			<div class="app-content">
-				<?php include 'include/header.php'; ?>
+				
+						<?php include('include/header.php');?>
+						
+				<!-- end: TOP NAVBAR -->
 				<div class="main-content" >
 					<div class="wrap-content container" id="container">
 						<!-- start: PAGE TITLE -->
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Doctor | Edit Doctor Details</h1>
+									<h1 class="mainTitle">Doctor | Update Profile</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
-										<span>Doctor</span>
+										<span>Doctor </span>
 									</li>
 									<li class="active">
-										<span>Edit Doctor Details</span>
+										<span>Update Profile</span>
 									</li>
 								</ol>
 							</div>
@@ -71,117 +70,79 @@ if (isset($_POST['submit'])) {
 						<div class="container-fluid container-fullw bg-white">
 							<div class="row">
 								<div class="col-md-12">
-									
+<h5 style="color: green; font-size:18px; ">
+<?php if($msg) { echo htmlentities($msg);}?> </h5>
 									<div class="row margin-top-30">
 										<div class="col-lg-8 col-md-12">
 											<div class="panel panel-white">
 												<div class="panel-heading">
-													<h5 class="panel-title">Edit Doctor</h5>
+													<h5 class="panel-title">Update Profile</h5>
 												</div>
 												<div class="panel-body">
-									<?php
-         $sql = mysqli_query(
-             $con,
-             "select * from doctors where docEmail='" .
-                 $_SESSION['dlogin'] .
-                 "'"
-         );
-         while ($data = mysqli_fetch_array($sql)) { ?>
-<h4><?php echo htmlentities($data['doctorName']); ?>'s Profile</h4>
-<p><b>Profile Reg. Date: </b><?php echo htmlentities(
-    $data['creationDate']
-); ?></p>
-<?php if ($data['updationDate']) { ?>
-<p><b>Profile Last Updation Date: </b><?php echo htmlentities(
-    $data['updationDate']
-); ?></p>
-<?php } ?>
-<hr />
-													<form role="form" name="adddoc" method="post" onSubmit="return valid();">
-														<div class="form-group">
-															<label for="DoctorSpecialization">
-																Doctor Specialization
-															</label>
-							<select name="Doctorspecialization" class="form-control" required="required">
-					<option value="<?php echo htmlentities($data['specilization']); ?>">
-					<?php echo htmlentities($data['specilization']); ?></option>
-<?php
-$ret = mysqli_query($con, 'select * from doctorspecilization');
-while ($row = mysqli_fetch_array($ret)) { ?>
-																<option value="<?php echo htmlentities($row['specilization']); ?>">
-																	<?php echo htmlentities($row['specilization']); ?>
-																</option>
-																<?php }
+									<?php 
+$sql=mysqli_query($con,"select * from doctorlogin where email='".$_SESSION['email']."'");
+while($data=mysqli_fetch_array($sql))
+{
 ?>
-																
-															</select>
-														</div>
-
-<div class="form-group">
-															<label for="doctorname">
-																 Doctor Name
-															</label>
-	<input type="text" name="docname" class="form-control" value="<?php echo htmlentities(
-     $data['doctorName']
- ); ?>" >
-														</div>
+<h4><?php echo htmlentities($data['username']);?>'s Profile</h4>
 
 
+<hr />													<form role="form" name="update" method="post">
+													
+
 <div class="form-group">
-															<label for="address">
-																 Doctor Clinic Address
+															<label for="username">
+																 Name
 															</label>
-					<textarea name="clinicaddress" class="form-control"><?php echo htmlentities(
-         $data['address']
-     ); ?></textarea>
+	<input type="text" name="username" class="form-control" value="<?php echo htmlentities($data['username']);?>" >
 														</div>
-<div class="form-group">
-															<label for="fess">
-																 Doctor Consultancy Fees
-															</label>
-		<input type="text" name="docfees" class="form-control" required="required"  value="<?php echo htmlentities(
-      $data['docFees']
-  ); ?>" >
-														</div>
+
+
+
+
 	
 <div class="form-group">
-									<label for="fess">
-																 Doctor Contact no
+									<label for="specialization">
+																specialization
 															</label>
-					<input type="text" name="doccontact" class="form-control" required="required"  value="<?php echo htmlentities(
-         $data['contactno']
-     ); ?>">
+
+<select name="specialization" class="form-control" required="required" >
+<option value="Choose Specialization">Choose Specialization</option>
+<option value="General Physician">General Physician</option>	
+<option value="Dermatologist">Dermatologist</option>	
+<option value="ENT Specialist">ENT Specialist</option>	
+</select>
+
 														</div>
+														
 
-<div class="form-group">
-									<label for="fess">
-																 Doctor Email
-															</label>
-					<input type="email" name="docemail" class="form-control"  readonly="readonly"  value="<?php echo htmlentities(
-         $data['docEmail']
-     ); ?>">
-														</div>
 
 
 
 														
-														<?php }
-         ?>
-														
-														
-														<button type="submit" name="submit" class="btn btn-o btn-primary">
+		<br><button type="submit" name="submit" class="btn btn-o btn-primary">
 															Update
-														</button>
+														</button>	
+														
+														
+												
 													</form>
+													<?php } ?>
 												</div>
 											</div>
 										</div>
 											
 											</div>
 										</div>
-									
+									<div class="col-lg-12 col-md-12">
+											<div class="panel panel-white">
+												
+												
+											</div>
+										</div>
+									</div>
 								</div>
-							
+						
 						<!-- end: BASIC EXAMPLE -->
 			
 					
@@ -195,12 +156,12 @@ while ($row = mysqli_fetch_array($ret)) { ?>
 				</div>
 			</div>
 			<!-- start: FOOTER -->
-	<?php include 'include/footer.php'; ?>
+	<?php include('include/footer.php');?>
 			<!-- end: FOOTER -->
 		
 			<!-- start: SETTINGS -->
-	<?php include 'include/setting.php'; ?>
-			<>
+	<?php include('include/setting.php');?>
+			
 			<!-- end: SETTINGS -->
 		</div>
 		<!-- start: MAIN JAVASCRIPTS -->

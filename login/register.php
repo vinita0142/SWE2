@@ -32,9 +32,9 @@ if ($num == 1) {
     </script>';
 } else {
     if ($name == 'doctor') {
-        $reg = "insert into doctorlogin values('$email','$password','$name')";
+        $reg = "insert into doctorlogin values('$name','$email','$password')";
     } else {
-        $reg = "insert into patientlogin values('$email','$password','$name')";
+        $reg = "insert into patientlogin values('$name','$email','$password','na')";
     }
     mysqli_query($con, $reg);
     echo '<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>

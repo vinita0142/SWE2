@@ -1,9 +1,9 @@
 <?php
 session_start();
-error_reporting(0);
 include('include/config.php');
 if(isset($_POST['submit']))
 {	
+	// echo '<script>"no error till here"</script>';
 $email=$_SESSION['email'];
 $name=$_POST['patname'];
 $contact=$_POST['patcontact'];
@@ -15,77 +15,14 @@ $height=$_POST['height'];
 $weight=$_POST['weight'];
 $blood=$_POST['blood'];
 $history=$_POST['medhis'];
-// file upload starts here
-// $target_dir = 'postcard/';
-// $target_file = $target_dir . basename($_FILES['fileToUpload']['name']);
-// $uploadOk = 1;
-// $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-// $error = '';
-// $success = '';
-// // Check if image file is a actual image or fake image
-// if (isset($_POST['submit'])) {
-
-//     $check = getimagesize($_FILES['fileToUpload']['tmp_name']);
-//     if ($check !== false) {
-//         // $error = 'File is an image - ' . $check['mime'] . '.';
-//         $uploadOk = 1;
-//     } else {
-//         $error = 'File is not an image.';
-//         $uploadOk = 0;
-//     }
-// }
-// echo '<script>alert("'.$uploadOk.'")</script>';
-
-// // Check if file already exists
-// if (file_exists($target_file)) {
-// 	echo '<script>alert("upload failing ")</script>';
-
-//     $error = 'Sorry, file already exists.';
-//     $uploadOk = 0;
-// }
-
-// // Check file size
-// if ($_FILES['fileToUpload']['size'] > 500000) {
-//     $error = 'Sorry, your file is too large.';
-//     $uploadOk = 0;
-// }
-
-// // Allow certain file formats
-// if (
-//     $imageFileType != 'jpg' &&
-//     $imageFileType != 'png' &&
-//     $imageFileType != 'jpeg' &&
-//     $imageFileType != 'gif'
-// ) {
-//     $error = 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.';
-//     $uploadOk = 0;
-// }
-// // Check if $uploadOk is set to 0 by an error
-// if ($uploadOk == 1) {
-	
-//     if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_file)) {
-//         $success =
-//             'The file ' .
-//             htmlspecialchars(basename($_FILES['fileToUpload']['name'])) .
-//             ' has been uploaded.';
-//         // echo $success;
-//         $_SESSION['success'] = $success;
-//     } else {
-//         $error = 'Sorry, there was an error uploading your file.';
-//     }
-// }
-// if($uploadOk==1){
-// 	$msg='file upload failed';
-// 	echo '<script>alert("'.$msg.'")</script>';
-// }
-//it ends here
 $sql=mysqli_query($con,"insert into patientdetails values('$email','$name','$contact','$gender','$address','$age','$height','$weight','$history','$blood')");
 if($sql)
 {
     //if successfull entry in database
-    $sql="update patientlogin set completed='completed' where email='$email'";
-    $result=mysqli_query($con,$sql);
+    $sql1="update patientlogin set completed='completed' where email='$email'";
+    $result=mysqli_query($con,$sql1);
     if($result){
+
     echo '<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
@@ -146,14 +83,7 @@ if($sql)
 							<div class="col-sm-8">
 								<h1 class="mainTitle">Please complete your Registration!</h1>
 							</div>
-							<!-- <ol class="breadcrumb">
-<li>
-<span>Patient</span>
-</li>
-<li class="active">
-<span>Add Patient</span>
-</li>
-</ol> -->
+
 						</div>
 					</section>
 					<div class="container-fluid container-fullw bg-white">
@@ -257,13 +187,6 @@ if($sql)
 															required="true"></textarea>
 													</div>
 
-													<!-- <div class="form-group">
-														<label for="files">
-															Upload files
-														</label>
-														<input type="file" name="fileToUpload" id="fileToUpload">
-													</div> -->
-
 													<button type="submit" name="submit" id="submit"
 														class="btn btn-o btn-primary">
 														Submit
@@ -290,7 +213,6 @@ if($sql)
 	<!-- end: FOOTER -->
 
 	<!-- start: SETTINGS -->
-	<?php include('include/setting.php');?>
 
 	<!-- end: SETTINGS -->
 	</div>

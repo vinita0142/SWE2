@@ -3,11 +3,25 @@ session_start();
 error_reporting(0);
 include 'include/config.php';
 if (isset($_GET['cancel'])) {
-    mysqli_query(
-        $con,
-        "update appointment set userStatus='0' where id = '" . $_GET['id'] . "'"
-    );
-    $_SESSION['msg'] = 'Your appointment canceled !!';
+    if(mysqli_query($con,"update apptdetails set status='canceled' where aptID = '" . $_GET['id'] . "'")){
+		echo '<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+		<script type="text/javascript">
+		
+			$(document).ready(function() {
+				swal({
+					title: "Appointment canceled ",
+					text: "Appointment canceled",
+					icon: "success",
+					button: "Ok",
+					timer: 5000
+				}).then(function(){
+					window.location="appointment-history.php";
+				});
+			});
+		</script>';
+	}
+
 }
 ?>
 <!DOCTYPE html>
@@ -85,7 +99,7 @@ if (isset($_GET['cancel'])) {
 <?php
 $sql = mysqli_query(
     $con,
-    "select dname,spec,fee,date,time,cdate,status from apptdetails where email='" .
+    "select aptID,dname,spec,fee,date,time,cdate,status from apptdetails where email='" .
         $_SESSION['email'] .
         "'"
 );
@@ -101,8 +115,13 @@ while ($row = mysqli_fetch_array($sql)) { ?>
 												</td>
 												<td><?php echo $row['cdate']; ?></td>
 												<td><?php echo $row['status']; ?></td>
-												<td><a href="#">Join</a></td>
-												<td><a href="cancel.php">Cancel</a></td>
+												<td><a id="join" href="https://webrtc-video-call-ec3b9.web.app">Join</a></td>
+												<!-- <td><a href="cancel.php">Cancel</a></td> -->
+												<td>
+
+													<a href="appointment-history.php?id=<?php echo $row['aptID']?>&cancel=update" onClick="return confirm('Are you sure you want to cancel this appointment ?')"class="btn btn-transparent btn-xs tooltips" title="Cancel Appointment" tooltip-placement="top" tooltip="Remove">Cancel</a>
+												</td>
+
 											</tr>
 											
 											<?php $cnt = $cnt + 1;}?>

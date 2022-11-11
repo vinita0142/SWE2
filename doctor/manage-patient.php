@@ -67,7 +67,6 @@ include('include/config.php');
 <th>Action</th>
 </tr>
 <?php
-//$sql=mysqli_query($con,"SELECT * from patientdetails JOIN patientlogin where patientlogin.email=patientdetails.email ");
 $sql=mysqli_query($con,"SELECT * from patientdetails JOIN apptdetails ON apptdetails.email=patientdetails.email JOIN doctorlogin ON apptdetails.spec=doctorlogin.specialization AND doctorlogin.email= '" .$_SESSION['email'] .
 "'");
 $email=$row['patientdetails.email'];
